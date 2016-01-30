@@ -1,0 +1,4 @@
+Ok so, if you right click the branch that you are working on, and say "new branch"
+then you can add/change things and it only affects that new branch.
+Then when you commit and push to GitHub, it will separate from the other branches.
+Later, we can merge branches together to congolmerate our edits.
