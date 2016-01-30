@@ -36,13 +36,20 @@ public class Player : MonoBehaviour {
 
         moveDirection = new Vector3(0, 0, 0);
 
-        //Physics.IgnoreLayerCollision(12, gameObject.layer);
+        Physics.IgnoreLayerCollision(8, gameObject.layer);
 
     }
 
     // Update is called once per frame
     void Update () {
         ControlUpdate();
+
+        if (Input.GetButtonDown("Fire"))
+        {
+            Lightball();
+        }
+
+
     }
 
     void ControlUpdate()
@@ -103,6 +110,8 @@ public class Player : MonoBehaviour {
          */
 
     }
+
+
 
     void Lightball()
     {
