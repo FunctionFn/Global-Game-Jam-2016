@@ -1,2 +1,0 @@
-Hello world.
-I edited the test thing.
