@@ -5,9 +5,11 @@ public class Player : MonoBehaviour {
 
     public CharacterController controller;
     public GameObject lightballPrefab;
+    public GameObject lightblastPrefab;
     public GameObject mainCamera;
 
     public Transform lightballSpawnLocation;
+    public Transform lightblastSpawnLocation;
     public Transform cameraAxisLocation;
 
     public Vector3 lookDirectionH;
@@ -19,14 +21,20 @@ public class Player : MonoBehaviour {
 
     public float speed;
     public float jumpSpeed;
+    public float airSpeedModifier;
 
     public float lookSpeedH;
     public float lookSpeedV;
 
+    public float jumpHoldGravityModifier;
     public float gravity;
 
     public float lightballSpeed;
     public float lightballUpOffset;
+
+    public float lbChargePerSecond;
+    public float lbMaxCharge;
+    public float currentCharge;
 
 
     // Use this for initialization
@@ -44,24 +52,38 @@ public class Player : MonoBehaviour {
     void Update () {
         ControlUpdate();
 
-        if (Input.GetButtonDown("Fire"))
+        if (Input.GetButton("Fire"))
+        {
+            LightballCharge();
+        }
+
+        if(Input.GetButtonUp("Fire"))
         {
             Lightball();
         }
 
-
+        if(Input.GetButtonDown("Blast"))
+        {
+            LightBlast();
+        }
     }
 
     void ControlUpdate()
     {
-        //if (controller.isGrounded)
-        //{
-        moveDirection = new Vector3(Input.GetAxis("Horizontal"), moveDirection.y, Input.GetAxis("Vertical"));
+        float speedMod = 1;
+
+
+		if (!controller.isGrounded)
+		{
+			speedMod = airSpeedModifier;
+		}
+		moveDirection = new Vector3(Input.GetAxis("Horizontal") * speedMod, moveDirection.y, Input.GetAxis("Vertical"));
 
         if (controller.isGrounded)
         {
             moveDirection = new Vector3(moveDirection.x, 0, moveDirection.z);
         }
+        
 
         moveDirection = transform.TransformDirection(moveDirection);
         moveDirection = new Vector3 (moveDirection.x * speed, moveDirection.y, moveDirection.z * speed);
@@ -71,11 +93,15 @@ public class Player : MonoBehaviour {
         if (controller.isGrounded)
         {
 
-            if (Input.GetButton("Jump"))
+            if (Input.GetButtonDown("Jump"))
                 moveDirection.y = jumpSpeed;
 
         }
-        moveDirection.y -= gravity * Time.deltaTime;
+
+        if(moveDirection.y > 0 && Input.GetButton("Jump"))
+            moveDirection.y -= (gravity - jumpHoldGravityModifier) * Time.deltaTime;
+        else
+            moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
 
         CameraControl();
@@ -115,7 +141,27 @@ public class Player : MonoBehaviour {
 
     void Lightball()
     {
-        GameObject go = (GameObject)Instantiate(lightballPrefab, lightballSpawnLocation.position, mainCamera.transform.rotation);
-        go.GetComponent<Rigidbody>().velocity = (mainCamera.transform.forward + mainCamera.transform.up * lightballUpOffset) * lightballSpeed;
+        if (currentCharge == lbMaxCharge)
+        {
+            GameObject go = (GameObject)Instantiate(lightballPrefab, lightballSpawnLocation.position, mainCamera.transform.rotation);
+            go.GetComponent<Rigidbody>().velocity = (mainCamera.transform.forward + mainCamera.transform.up * lightballUpOffset) * lightballSpeed;
+        }
+        currentCharge = 0;
+    }
+
+    void LightballCharge()
+    {
+        currentCharge += lbChargePerSecond * Time.deltaTime;
+
+        if(currentCharge > lbMaxCharge)
+        {
+            currentCharge = lbMaxCharge;
+        }
+
+    }
+
+    void LightBlast()
+    {
+        GameObject go = (GameObject)Instantiate(lightblastPrefab, lightblastSpawnLocation.position, transform.rotation);
     }
 }
