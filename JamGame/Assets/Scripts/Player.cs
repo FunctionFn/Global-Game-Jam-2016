@@ -55,6 +55,9 @@ public class Player : MonoBehaviour {
 	public AudioMixerSnapshot chargeOff;
 	bool playCharge = true;
 
+	public AudioMixerSnapshot lightOn;
+	public AudioMixerSnapshot lightOff;
+
     // Use this for initialization
     void Start()
     {
@@ -256,6 +259,7 @@ public class Player : MonoBehaviour {
 
 	void ChargeLight()
 	{
+		lightOn.TransitionTo(1.0f);
 		playerPublicMethods.AddLight(lightRechargePerSecond * Time.deltaTime);
 	}
 
@@ -266,6 +270,7 @@ public class Player : MonoBehaviour {
 
 	void SpendLight(float light)
 	{
+		lightOn.TransitionTo(1.0f);
 		playerPublicMethods.RemoveLight(light);
 	}
 
