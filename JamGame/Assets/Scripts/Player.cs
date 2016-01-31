@@ -5,9 +5,16 @@ public class Player : MonoBehaviour {
 
     public CharacterController controller;
     public GameObject lightballPrefab;
+    public GameObject lightblastPrefab;
     public GameObject mainCamera;
+	public GameObject staff;
+	public Light staffPoint;
+	public float staffMaxIntensity;
+
+	public GameObject canvasFlash;
 
     public Transform lightballSpawnLocation;
+    public Transform lightblastSpawnLocation;
     public Transform cameraAxisLocation;
 
     public Vector3 lookDirectionH;
@@ -15,19 +22,29 @@ public class Player : MonoBehaviour {
 
     public Vector3 moveDirection;
 
-    
-
     public float speed;
     public float jumpSpeed;
+    public float airSpeedModifier;
 
     public float lookSpeedH;
     public float lookSpeedV;
 
+    public float jumpHoldGravityModifier;
     public float gravity;
 
     public float lightballSpeed;
     public float lightballUpOffset;
 
+    public float lbChargePerSecond;
+    public float lbMaxCharge;
+	public float lbCost;
+	public float blastCost;
+    public float currentCharge;
+	PlayerSounds playerSounds;
+	bool hasJustLanded = false;
+	public float lightRechargePerSecond;
+
+	private PlayerPubMethods playerPublicMethods;
 
     // Use this for initialization
     void Start()
@@ -36,25 +53,67 @@ public class Player : MonoBehaviour {
 
         moveDirection = new Vector3(0, 0, 0);
 
-        //Physics.IgnoreLayerCollision(12, gameObject.layer);
+        Physics.IgnoreLayerCollision(8, gameObject.layer);
+
+		playerSounds = GetComponent<PlayerSounds>();
+		playerPublicMethods = GetComponent<PlayerPubMethods>();
 
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update () 
+	{
+
+		if(controller.isGrounded)
+		{
+			if(!hasJustLanded)
+			{
+				hasJustLanded = true;
+				playerSounds.PlayLand();
+			}
+		}
+		else
+		{
+			hasJustLanded = false;
+		}
+
         ControlUpdate();
+
+        if (Input.GetButton("Fire"))
+        {
+            LightballCharge();
+        }
+
+        if(Input.GetButtonUp("Fire"))
+        {
+            Lightball();
+        }
+
+        if(Input.GetButtonDown("Blast"))
+        {
+            LightBlast();
+        }
+
+		staffPoint.intensity = staffMaxIntensity * (currentCharge / 100f);
+
     }
 
     void ControlUpdate()
     {
-        //if (controller.isGrounded)
-        //{
-        moveDirection = new Vector3(Input.GetAxis("Horizontal"), moveDirection.y, Input.GetAxis("Vertical"));
+        float speedMod = 1;
+
+
+		if (!controller.isGrounded)
+		{
+			speedMod = airSpeedModifier;
+		}
+		moveDirection = new Vector3(Input.GetAxis("Horizontal") * speedMod, moveDirection.y, Input.GetAxis("Vertical"));
 
         if (controller.isGrounded)
         {
             moveDirection = new Vector3(moveDirection.x, 0, moveDirection.z);
         }
+        
 
         moveDirection = transform.TransformDirection(moveDirection);
         moveDirection = new Vector3 (moveDirection.x * speed, moveDirection.y, moveDirection.z * speed);
@@ -64,11 +123,18 @@ public class Player : MonoBehaviour {
         if (controller.isGrounded)
         {
 
-            if (Input.GetButton("Jump"))
+            if (Input.GetButtonDown("Jump"))
+			{
                 moveDirection.y = jumpSpeed;
+				playerSounds.PlayJump();
+			}
 
         }
-        moveDirection.y -= gravity * Time.deltaTime;
+
+        if(moveDirection.y > 0 && Input.GetButton("Jump"))
+            moveDirection.y -= (gravity - jumpHoldGravityModifier) * Time.deltaTime;
+        else
+            moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
 
         CameraControl();
@@ -104,9 +170,92 @@ public class Player : MonoBehaviour {
 
     }
 
+	//*
+	void OnTriggerEnter(Collider other)
+	{
+
+		if (other.tag == "platformTrigger")
+		{
+
+			transform.parent = other.transform.parent.parent;
+		}
+	}
+
+	void OnTriggerExit(Collider collider)
+	{
+
+		if (collider.gameObject.tag == "platformTrigger")
+		{
+			transform.parent = null;
+		}
+	}
+	//*/
+
+
+
     void Lightball()
     {
-        GameObject go = (GameObject)Instantiate(lightballPrefab, lightballSpawnLocation.position, mainCamera.transform.rotation);
-        go.GetComponent<Rigidbody>().velocity = (mainCamera.transform.forward + mainCamera.transform.up * lightballUpOffset) * lightballSpeed;
+        if (currentCharge == lbMaxCharge)
+        {
+            GameObject go = (GameObject)Instantiate(lightballPrefab, lightballSpawnLocation.position, mainCamera.transform.rotation);
+            go.GetComponent<Rigidbody>().velocity = (mainCamera.transform.forward + mainCamera.transform.up * lightballUpOffset) * lightballSpeed;
+			SpendLight(lbCost);
+        }
+        currentCharge = 0;
     }
+
+    void LightballCharge()
+    {
+		if (playerPublicMethods.GetCurrentLight() >= lbCost)
+		{
+			currentCharge += lbChargePerSecond * Time.deltaTime;
+
+			if (currentCharge > lbMaxCharge)
+			{
+				currentCharge = lbMaxCharge;
+			}
+		}
+    }
+
+	void LightBlast()
+	{
+		if (playerPublicMethods.GetCurrentLight() >= blastCost)
+		{
+			GameObject go = (GameObject)Instantiate(lightblastPrefab, lightblastSpawnLocation.position, transform.rotation);
+			SpendLight(blastCost);
+
+			canvasFlash.GetComponent<LightFlash>().Flash();
+		}
+		
+	}
+
+	void ChargeLight()
+	{
+		playerPublicMethods.AddLight(lightRechargePerSecond * Time.deltaTime);
+	}
+
+	void SpendLight(float light)
+	{
+		playerPublicMethods.RemoveLight(light);
+	}
+
+	void OnTriggerStay(Collider other)
+	{
+		if(other.GetComponent<Sunbeam>())
+		{
+			if (playerPublicMethods.GetCurrentLight() < playerPublicMethods.GetMaxLight())
+			{
+				ChargeLight();
+				other.GetComponent<Sunbeam>().drainLight(lightRechargePerSecond * Time.deltaTime);
+			}
+		}
+	}
+
+	public bool StolenIsPlayerMoving()
+	{
+		if (Mathf.Abs(controller.velocity.magnitude) >= .5)
+			return true;
+		else
+			return false;
+	}
 }
