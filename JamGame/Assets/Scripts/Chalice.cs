@@ -7,6 +7,8 @@ public class Chalice : MonoBehaviour {
 	public float maxLight;
 	public float currentLight;
 
+	public GameObject endTrigger;
+
 	public Light gem;
 	public float gemMaxIntensity;
 
@@ -52,6 +54,6 @@ public class Chalice : MonoBehaviour {
 
 	void OnFilled()
 	{
-		Debug.Log("Door Open!");
+		endTrigger.SetActive(true);
 	}
 }

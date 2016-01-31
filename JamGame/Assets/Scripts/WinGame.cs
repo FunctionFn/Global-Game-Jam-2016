@@ -1,19 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
-public class TransitionScene : MonoBehaviour 
-{
+public class WinGame : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () 
-	{
+	void Start () {
 	
 	}
 	
 	// Update is called once per frame
-	void Update () 
-	{
+	void Update () {
 	
 	}
 
@@ -21,7 +18,7 @@ public class TransitionScene : MonoBehaviour
 	{
 		if (other.GetComponent<Player>())
 		{
-			SceneManager.LoadScene("Level 2");
+			SceneManager.LoadScene("Win Screen");
 		}
 	}
 }
