@@ -27,11 +27,6 @@ public class PlayerSounds : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-<<<<<<< HEAD
-=======
-		//Debug.Log (IsPlayerMoving());
-
->>>>>>> origin/dan_is_even_awesomer
 		if (IsPlayerMoving())
 		{
 			playsteps = true;

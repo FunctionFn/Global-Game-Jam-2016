@@ -8,6 +8,8 @@ public class Player : MonoBehaviour {
     public GameObject lightblastPrefab;
     public GameObject mainCamera;
 
+	public GameObject canvasFlash;
+
     public Transform lightballSpawnLocation;
     public Transform lightblastSpawnLocation;
     public Transform cameraAxisLocation;
@@ -39,6 +41,7 @@ public class Player : MonoBehaviour {
 	bool hasJustLanded = false;
 	public float lightRechargePerSecond;
 
+	private PlayerPubMethods playerPublicMethods;
 
     // Use this for initialization
     void Start()
@@ -50,6 +53,12 @@ public class Player : MonoBehaviour {
         Physics.IgnoreLayerCollision(8, gameObject.layer);
 
 		playerSounds = GetComponent<PlayerSounds>();
+<<<<<<< HEAD
+=======
+
+
+		playerPublicMethods = GetComponent<PlayerPubMethods>();
+>>>>>>> origin/dan_is_even_awesomer
     }
 
     // Update is called once per frame
@@ -192,28 +201,55 @@ public class Player : MonoBehaviour {
         {
             GameObject go = (GameObject)Instantiate(lightballPrefab, lightballSpawnLocation.position, mainCamera.transform.rotation);
             go.GetComponent<Rigidbody>().velocity = (mainCamera.transform.forward + mainCamera.transform.up * lightballUpOffset) * lightballSpeed;
+			SpendLight(lbCost);
         }
         currentCharge = 0;
     }
 
     void LightballCharge()
     {
-        currentCharge += lbChargePerSecond * Time.deltaTime;
+		if (playerPublicMethods.GetCurrentLight() >= lbCost)
+		{
+			currentCharge += lbChargePerSecond * Time.deltaTime;
 
-        if(currentCharge > lbMaxCharge)
-        {
-            currentCharge = lbMaxCharge;
-        }
-
+			if (currentCharge > lbMaxCharge)
+			{
+				currentCharge = lbMaxCharge;
+			}
+		}
     }
 
 	void LightBlast()
 	{
-		GameObject go = (GameObject)Instantiate(lightblastPrefab, lightblastSpawnLocation.position, transform.rotation);
+		if (playerPublicMethods.GetCurrentLight() >= blastCost)
+		{
+			GameObject go = (GameObject)Instantiate(lightblastPrefab, lightblastSpawnLocation.position, transform.rotation);
+			SpendLight(blastCost);
+
+			canvasFlash.GetComponent<LightFlash>().Flash();
+		}
+		
 	}
 
 	void ChargeLight()
 	{
-		gameObject.GetComponent<PlayerPubMethods>().AddLight(lightRechargePerSecond);
+		playerPublicMethods.AddLight(lightRechargePerSecond * Time.deltaTime);
+	}
+
+	void SpendLight(float light)
+	{
+		playerPublicMethods.RemoveLight(light);
+	}
+
+	void OnTriggerStay(Collider other)
+	{
+		if(other.GetComponent<Sunbeam>())
+		{
+			if (playerPublicMethods.GetCurrentLight() < playerPublicMethods.GetMaxLight())
+			{
+				ChargeLight();
+				other.GetComponent<Sunbeam>().drainLight(lightRechargePerSecond * Time.deltaTime);
+			}
+		}
 	}
 }
