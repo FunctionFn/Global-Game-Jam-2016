@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerPubMethods : MonoBehaviour 
 {
@@ -30,6 +31,11 @@ public class PlayerPubMethods : MonoBehaviour
 	{
 		healthRemaining -= damage;
 		Debug.Log("Health remaining: " + healthRemaining);
+
+		if(healthRemaining <= 0)
+		{
+			KillPlayer();
+		}
 	}
 
 	public int GetCurrentHealth()
@@ -72,5 +78,11 @@ public class PlayerPubMethods : MonoBehaviour
 	public float GetMaxLight()
 	{
 		return MaxLight;
+	}
+
+	void KillPlayer()
+	{
+
+		SceneManager.LoadScene("DeathScreen");
 	}
 }
