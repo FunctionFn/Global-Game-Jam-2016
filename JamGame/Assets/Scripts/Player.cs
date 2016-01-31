@@ -17,8 +17,6 @@ public class Player : MonoBehaviour {
 
     public Vector3 moveDirection;
 
-    
-
     public float speed;
     public float jumpSpeed;
     public float airSpeedModifier;
@@ -34,10 +32,16 @@ public class Player : MonoBehaviour {
 
     public float lbChargePerSecond;
     public float lbMaxCharge;
+	public float lbCost;
+	public float blastCost;
     public float currentCharge;
 
+<<<<<<< HEAD
 	PlayerSounds playerSounds;
 	bool hasJustLanded = false;
+=======
+	public float lightRechargePerSecond;
+>>>>>>> origin/dan_is_even_awesomer
 
 
     // Use this for initialization
@@ -184,8 +188,13 @@ public class Player : MonoBehaviour {
 
     }
 
-    void LightBlast()
-    {
-        GameObject go = (GameObject)Instantiate(lightblastPrefab, lightblastSpawnLocation.position, transform.rotation);
-    }
+	void LightBlast()
+	{
+		GameObject go = (GameObject)Instantiate(lightblastPrefab, lightblastSpawnLocation.position, transform.rotation);
+	}
+
+	void ChargeLight()
+	{
+		gameObject.GetComponent<PlayerPubMethods>().AddLight(lightRechargePerSecond);
+	}
 }
