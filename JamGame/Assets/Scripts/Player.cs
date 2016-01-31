@@ -35,13 +35,9 @@ public class Player : MonoBehaviour {
 	public float lbCost;
 	public float blastCost;
     public float currentCharge;
-
-<<<<<<< HEAD
 	PlayerSounds playerSounds;
 	bool hasJustLanded = false;
-=======
 	public float lightRechargePerSecond;
->>>>>>> origin/dan_is_even_awesomer
 
 
     // Use this for initialization
