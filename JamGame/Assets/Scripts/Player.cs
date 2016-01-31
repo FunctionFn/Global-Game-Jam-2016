@@ -39,9 +39,6 @@ public class Player : MonoBehaviour {
 	bool hasJustLanded = false;
 	public float lightRechargePerSecond;
 
-	PlayerSounds playerSounds;
-	bool hasJustLanded = false;
-
 
     // Use this for initialization
     void Start()
