@@ -7,6 +7,9 @@ public class Player : MonoBehaviour {
     public GameObject lightballPrefab;
     public GameObject lightblastPrefab;
     public GameObject mainCamera;
+	public GameObject staff;
+	public Light staffPoint;
+	public float staffMaxIntensity;
 
 	public GameObject canvasFlash;
 
@@ -91,6 +94,8 @@ public class Player : MonoBehaviour {
             LightBlast();
         }
 
+		staffPoint.intensity = staffMaxIntensity * (currentCharge / 100f);
+
     }
 
     void ControlUpdate()
@@ -168,11 +173,9 @@ public class Player : MonoBehaviour {
 	//*
 	void OnTriggerEnter(Collider other)
 	{
-		Debug.Log("Enter trigger");
 
 		if (other.tag == "platformTrigger")
 		{
-			Debug.Log("Entered correct trigger");
 
 			transform.parent = other.transform.parent.parent;
 		}
@@ -180,7 +183,6 @@ public class Player : MonoBehaviour {
 
 	void OnTriggerExit(Collider collider)
 	{
-		Debug.Log("Exit trigger");
 
 		if (collider.gameObject.tag == "platformTrigger")
 		{
@@ -247,5 +249,13 @@ public class Player : MonoBehaviour {
 				other.GetComponent<Sunbeam>().drainLight(lightRechargePerSecond * Time.deltaTime);
 			}
 		}
+	}
+
+	public bool StolenIsPlayerMoving()
+	{
+		if (Mathf.Abs(controller.velocity.magnitude) >= .5)
+			return true;
+		else
+			return false;
 	}
 }
