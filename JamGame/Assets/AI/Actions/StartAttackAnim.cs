@@ -5,7 +5,7 @@ using RAIN.Action;
 using RAIN.Core;
 
 [RAINAction]
-public class EnemyAttack : RAINAction
+public class StartAttackAnim : RAINAction
 {
     public override void Start(RAIN.Core.AI ai)
     {
@@ -14,8 +14,7 @@ public class EnemyAttack : RAINAction
 
     public override ActionResult Execute(RAIN.Core.AI ai)
     {
-		ai.Body.GetComponent<EnemyScript>().Invoke("AttackPlayer", 0.0f);
-		ai.Body.GetComponentInChildren<Animator>().SetBool("AttackBool", false);
+		ai.Body.GetComponentInChildren<Animator>().SetBool("AttackBool", true);
         return ActionResult.SUCCESS;
     }
 

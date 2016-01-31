@@ -1,0 +1,174 @@
+fileFormatVersion: 2
+guid: a9fdc2a1e585a364ba398f7a86cadd78
+timeCreated: 1454239057
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: FaceButt
+    100004: FaceButt1
+    100006: joint1
+    100008: joint10
+    100010: joint10 1
+    100012: joint11
+    100014: joint11 1
+    100016: joint12
+    100018: joint12 1
+    100020: joint13
+    100022: joint13 1
+    100024: joint14
+    100026: joint14 1
+    100028: joint15
+    100030: joint15 1
+    100032: joint16
+    100034: joint16 1
+    100036: joint17
+    100038: joint17 1
+    100040: joint18
+    100042: joint18 1
+    100044: joint19
+    100046: joint19 1
+    100048: joint2
+    100050: joint20
+    100052: joint20 1
+    100054: joint21
+    100056: joint21 1
+    100058: joint22
+    100060: joint3
+    100062: joint4
+    100064: joint5
+    100066: joint6
+    100068: joint7
+    100070: joint8
+    100072: joint8 1
+    100074: joint9
+    100076: joint9 1
+    100078: MainDraft
+    100080: MainDraft1
+    100082: MainDraft2
+    100084: pCube1
+    100086: pCube2
+    100088: transform1
+    100090: transform2
+    100092: transform3
+    100094: transform4
+    400000: //RootNode
+    400002: FaceButt
+    400004: FaceButt1
+    400006: joint1
+    400008: joint10
+    400010: joint10 1
+    400012: joint11
+    400014: joint11 1
+    400016: joint12
+    400018: joint12 1
+    400020: joint13
+    400022: joint13 1
+    400024: joint14
+    400026: joint14 1
+    400028: joint15
+    400030: joint15 1
+    400032: joint16
+    400034: joint16 1
+    400036: joint17
+    400038: joint17 1
+    400040: joint18
+    400042: joint18 1
+    400044: joint19
+    400046: joint19 1
+    400048: joint2
+    400050: joint20
+    400052: joint20 1
+    400054: joint21
+    400056: joint21 1
+    400058: joint22
+    400060: joint3
+    400062: joint4
+    400064: joint5
+    400066: joint6
+    400068: joint7
+    400070: joint8
+    400072: joint8 1
+    400074: joint9
+    400076: joint9 1
+    400078: MainDraft
+    400080: MainDraft1
+    400082: MainDraft2
+    400084: pCube1
+    400086: pCube2
+    400088: transform1
+    400090: transform2
+    400092: transform3
+    400094: transform4
+    4300000: FaceButt1
+    4300002: pCube1
+    4300004: pCube2
+    9500000: //RootNode
+    13700000: FaceButt1
+    13700002: pCube1
+    13700004: pCube2
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -10,12 +10,12 @@ public class EnemyScript : MonoBehaviour
 	public AudioClip[] playerHurtClips;
 	public AudioSource enemySounds;
 
-
+	public Animator anim;
 
 	// Use this for initialization
 	void Start () 
     {
-	
+		anim = GetComponentInChildren<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -33,6 +33,7 @@ public class EnemyScript : MonoBehaviour
 	public void AttackPlayer()
 	{
 		//Play animation
+		anim.SetBool("Attacking", true);
 		player.GetComponent<PlayerPubMethods>().Invoke("BasicAttack", 0.0f);
 		PlayPlayerHurt();
 	}
