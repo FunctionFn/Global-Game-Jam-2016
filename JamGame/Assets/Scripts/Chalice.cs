@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Audio;
 
 public class Chalice : MonoBehaviour {
 
@@ -13,6 +14,9 @@ public class Chalice : MonoBehaviour {
 	public float maxLightAlpha;
 
 	public float a;
+
+	public AudioMixerSnapshot lightOn;
+	public AudioMixerSnapshot lightOff;
 
 
 	
@@ -32,12 +36,13 @@ public class Chalice : MonoBehaviour {
 	{
 		if (currentLight >= maxLight)
 			return false;
-
+		lightOn.TransitionTo(0.5f);
 
 		currentLight += light;
 
 		if(currentLight >= maxLight)
 		{
+			lightOff.TransitionTo(0.5f);
 			OnFilled();
 		}
 
