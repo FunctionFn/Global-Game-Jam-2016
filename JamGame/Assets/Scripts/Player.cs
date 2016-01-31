@@ -252,8 +252,10 @@ public class Player : MonoBehaviour {
 				blastSound.Play();
 
 			canvasFlash.GetComponent<LightFlash>().Flash();
+			iTween.PunchPosition(mainCamera, new Vector3(0, 1.5f, 0), 1.3f);
 
 		}
+
 		
 	}
 
