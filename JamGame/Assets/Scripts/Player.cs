@@ -39,6 +39,7 @@ public class Player : MonoBehaviour {
 	bool hasJustLanded = false;
 	public float lightRechargePerSecond;
 
+	private PlayerPubMethods playerPublicMethods;
 
     // Use this for initialization
     void Start()
@@ -51,6 +52,8 @@ public class Player : MonoBehaviour {
 
 		playerSounds = GetComponent<PlayerSounds>();
 
+
+		playerPublicMethods = GetComponent<PlayerPubMethods>();
     }
 
     // Update is called once per frame
@@ -169,28 +172,53 @@ public class Player : MonoBehaviour {
         {
             GameObject go = (GameObject)Instantiate(lightballPrefab, lightballSpawnLocation.position, mainCamera.transform.rotation);
             go.GetComponent<Rigidbody>().velocity = (mainCamera.transform.forward + mainCamera.transform.up * lightballUpOffset) * lightballSpeed;
+			SpendLight(lbCost);
         }
         currentCharge = 0;
     }
 
     void LightballCharge()
     {
-        currentCharge += lbChargePerSecond * Time.deltaTime;
+		if (playerPublicMethods.GetCurrentLight() > lbCost)
+		{
+			currentCharge += lbChargePerSecond * Time.deltaTime;
 
-        if(currentCharge > lbMaxCharge)
-        {
-            currentCharge = lbMaxCharge;
-        }
-
+			if (currentCharge > lbMaxCharge)
+			{
+				currentCharge = lbMaxCharge;
+			}
+		}
     }
 
 	void LightBlast()
 	{
-		GameObject go = (GameObject)Instantiate(lightblastPrefab, lightblastSpawnLocation.position, transform.rotation);
+		if (playerPublicMethods.GetCurrentLight() > blastCost)
+		{
+			GameObject go = (GameObject)Instantiate(lightblastPrefab, lightblastSpawnLocation.position, transform.rotation);
+			SpendLight(blastCost);
+		}
+		
 	}
 
 	void ChargeLight()
 	{
-		gameObject.GetComponent<PlayerPubMethods>().AddLight(lightRechargePerSecond);
+		playerPublicMethods.AddLight(lightRechargePerSecond * Time.deltaTime);
+	}
+
+	void SpendLight(float light)
+	{
+		playerPublicMethods.RemoveLight(light);
+	}
+
+	void OnTriggerStay(Collider other)
+	{
+		if(other.GetComponent<Sunbeam>())
+		{
+			if (playerPublicMethods.GetCurrentLight() < playerPublicMethods.GetMaxLight())
+			{
+				ChargeLight();
+				other.GetComponent<Sunbeam>().drainLight(lightRechargePerSecond * Time.deltaTime);
+			}
+		}
 	}
 }

@@ -6,14 +6,13 @@ public class PlayerPubMethods : MonoBehaviour
 	[SerializeField] int StartingHealth;
 	int healthRemaining;
 
-	[SerializeField] float StartingLight;
+	[SerializeField] float MaxLight;
 	float lightRemaining;
 
 	// Use this for initialization
 	void Start () 
 	{
 		healthRemaining = StartingHealth;
-		lightRemaining = StartingLight;
 	}
 	
 	// Update is called once per frame
@@ -36,12 +35,37 @@ public class PlayerPubMethods : MonoBehaviour
 	public void AddLight(float light)
 	{
 		lightRemaining += light;
+
+		if(lightRemaining > MaxLight)
+		{
+			lightRemaining = MaxLight;
+		}
+
+		if (lightRemaining > MaxLight)
+			lightRemaining = MaxLight;
+
 		Debug.Log("Light remaining: " + lightRemaining);
+
+		
 	}
 
 	public void RemoveLight(float light)
 	{
-		lightRemaining += light;
+		lightRemaining -= light;
+
+		if (lightRemaining < 0)
+			lightRemaining = 0;
+
 		Debug.Log("Light remaining: " + lightRemaining);
+	}
+
+	public float GetCurrentLight()
+	{
+		return lightRemaining;
+	}
+
+	public float GetMaxLight()
+	{
+		return MaxLight;
 	}
 }

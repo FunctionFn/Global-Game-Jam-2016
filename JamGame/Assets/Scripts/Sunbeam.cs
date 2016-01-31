@@ -3,13 +3,25 @@ using System.Collections;
 
 public class Sunbeam : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	public float maxLight;
+	public float currentLight;
+
+
+	void Start()
+	{
+		currentLight = maxLight;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void drainLight(float light)
+	{
+		currentLight -= light;
+	}
+
+	void Update()
+	{
+		if (currentLight <= 0)
+		{
+			Destroy(gameObject);
+		}
 	}
 }

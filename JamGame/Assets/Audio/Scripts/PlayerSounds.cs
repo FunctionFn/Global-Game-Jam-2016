@@ -27,7 +27,7 @@ public class PlayerSounds : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		Debug.Log (IsPlayerMoving());
+		//Debug.Log (IsPlayerMoving());
 
 		if (IsPlayerMoving())
 		{
