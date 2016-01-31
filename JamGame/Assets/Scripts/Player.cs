@@ -50,12 +50,11 @@ public class Player : MonoBehaviour {
         Physics.IgnoreLayerCollision(8, gameObject.layer);
 
 		playerSounds = GetComponent<PlayerSounds>();
-
     }
 
     // Update is called once per frame
-    void Update () {
-
+    void Update () 
+	{
 
 		if(controller.isGrounded)
 		{
@@ -161,19 +160,20 @@ public class Player : MonoBehaviour {
 
     }
 
-
-	void OnTriggerStay(Collider other)
+	//*
+	void OnTriggerEnter(Collider other)
 	{
 		Debug.Log("Enter trigger");
 
 		if (other.tag == "platformTrigger")
 		{
 			Debug.Log("Entered correct trigger");
-			transform.parent = other.transform.parent;
+
+			transform.parent = other.transform.parent.parent;
 		}
 	}
 
-	/*void OnTriggerExit(Collider collider)
+	void OnTriggerExit(Collider collider)
 	{
 		Debug.Log("Exit trigger");
 
@@ -181,7 +181,8 @@ public class Player : MonoBehaviour {
 		{
 			transform.parent = null;
 		}
-	}*/
+	}
+	//*/
 
 
 

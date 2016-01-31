@@ -4,15 +4,15 @@ using System.Collections;
 public class MovingPlatform : MonoBehaviour 
 {
 	//Positive or Negative
-	[SerializeField] int Direction;
+	[SerializeField] float Direction = 1;
 	//Distance forward/backward
-	[SerializeField] int XDistance;
+	[SerializeField] float XDistance = 0;
 	//Distance up/down
-	[SerializeField] int YDistance;
+	[SerializeField] float YDistance = 0;
 	//Distance left/right
-	[SerializeField] int ZDistance;
+	[SerializeField] float ZDistance = 0;
 	//Speed
-	[SerializeField] int Speed;
+	[SerializeField] float Speed = 0;
 
 	Vector3 initialPos;
 	Vector3 targetPos;
