@@ -56,15 +56,13 @@ public class EnemyScript : MonoBehaviour
 	{
 		int i = Random.Range(0, enemyDeathClips.Length);
 
-		if(!enemySounds.isPlaying)
-			enemySounds.PlayOneShot(enemyDeathClips[i]);
+		AudioSource.PlayClipAtPoint(enemyDeathClips[i], transform.position);
 	}
 
 	void PlayPlayerHurt()
 	{
 		int i = Random.Range(0, playerHurtClips.Length);
 		
-		if(!enemySounds.isPlaying)
-			enemySounds.PlayOneShot(playerHurtClips[i]);
+		AudioSource.PlayClipAtPoint(playerHurtClips[i], transform.position);
 	}
 }
