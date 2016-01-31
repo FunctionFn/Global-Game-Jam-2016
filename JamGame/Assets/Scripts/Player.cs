@@ -173,11 +173,9 @@ public class Player : MonoBehaviour {
 	//*
 	void OnTriggerEnter(Collider other)
 	{
-		Debug.Log("Enter trigger");
 
 		if (other.tag == "platformTrigger")
 		{
-			Debug.Log("Entered correct trigger");
 
 			transform.parent = other.transform.parent.parent;
 		}
@@ -185,7 +183,6 @@ public class Player : MonoBehaviour {
 
 	void OnTriggerExit(Collider collider)
 	{
-		Debug.Log("Exit trigger");
 
 		if (collider.gameObject.tag == "platformTrigger")
 		{
