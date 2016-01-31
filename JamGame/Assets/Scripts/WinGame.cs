@@ -18,7 +18,7 @@ public class WinGame : MonoBehaviour {
 	{
 		if (other.GetComponent<Player>())
 		{
-			SceneManager.LoadScene("Win Screen");
+			SceneManager.LoadScene("Credits Screen");
 		}
 	}
 }

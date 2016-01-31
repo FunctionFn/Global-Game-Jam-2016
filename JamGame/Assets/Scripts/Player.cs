@@ -222,15 +222,15 @@ public class Player : MonoBehaviour {
 
     void LightballCharge()
     {
-		if(!chargeUp.isPlaying && playCharge)
-		{
-			chargeUp.Play ();
-			playCharge = false;
-			chargeOn.TransitionTo(1f);
-		}
-
 		if (playerPublicMethods.GetCurrentLight() >= lbCost)
 		{
+			if (!chargeUp.isPlaying && playCharge)
+			{
+				chargeUp.Play();
+				playCharge = false;
+				chargeOn.TransitionTo(1f);
+			}
+
 			currentCharge += lbChargePerSecond * Time.deltaTime;
 
 			if (currentCharge > lbMaxCharge)

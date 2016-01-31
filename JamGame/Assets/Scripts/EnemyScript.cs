@@ -33,7 +33,7 @@ public class EnemyScript : MonoBehaviour
 	public void AttackPlayer()
 	{
 		//Play animation
-		anim.SetBool("Attacking", true);
+		anim.SetBool("AttackBool", true);
 		player.GetComponent<PlayerPubMethods>().Invoke("BasicAttack", 0.0f);
 		PlayPlayerHurt();
 	}
