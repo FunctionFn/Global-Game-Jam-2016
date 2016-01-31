@@ -7,6 +7,9 @@ public class Player : MonoBehaviour {
     public GameObject lightballPrefab;
     public GameObject lightblastPrefab;
     public GameObject mainCamera;
+	public GameObject staff;
+	public Light staffPoint;
+	public float staffMaxIntensity;
 
 	public GameObject canvasFlash;
 
@@ -90,6 +93,8 @@ public class Player : MonoBehaviour {
         {
             LightBlast();
         }
+
+		staffPoint.intensity = staffMaxIntensity * (currentCharge / 100f);
 
     }
 
@@ -247,5 +252,13 @@ public class Player : MonoBehaviour {
 				other.GetComponent<Sunbeam>().drainLight(lightRechargePerSecond * Time.deltaTime);
 			}
 		}
+	}
+
+	public bool StolenIsPlayerMoving()
+	{
+		if (Mathf.Abs(controller.velocity.magnitude) >= .5)
+			return true;
+		else
+			return false;
 	}
 }
