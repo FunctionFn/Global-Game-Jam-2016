@@ -4,12 +4,15 @@ using System.Collections;
 public class PlayerPubMethods : MonoBehaviour 
 {
 	[SerializeField] int StartingHealth;
-	int healthRemaning;
+	int healthRemaining;
+
+	[SerializeField] int StartingLight;
+	int lightRemaining;
 
 	// Use this for initialization
 	void Start () 
 	{
-		healthRemaning = StartingHealth;
+		healthRemaining = StartingHealth;
 	}
 	
 	// Update is called once per frame
@@ -25,7 +28,19 @@ public class PlayerPubMethods : MonoBehaviour
 
 	void GetHit(int damage)
 	{
-		healthRemaning -= damage;
-		Debug.Log("Health remaining: " + healthRemaning);
+		healthRemaining -= damage;
+		Debug.Log("Health remaining: " + healthRemaining);
+	}
+
+	void AddLight(int light)
+	{
+		lightRemaining += light;
+		Debug.Log("Light remaining: " + lightRemaining);
+	}
+
+	void RemoveLight(int light)
+	{
+		lightRemaining += light;
+		Debug.Log("Light remaining: " + lightRemaining);
 	}
 }
