@@ -39,9 +39,6 @@ public class Player : MonoBehaviour {
 	bool hasJustLanded = false;
 	public float lightRechargePerSecond;
 
-	PlayerSounds playerSounds;
-	bool hasJustLanded = false;
-
 
     // Use this for initialization
     void Start()
@@ -163,6 +160,28 @@ public class Player : MonoBehaviour {
          */
 
     }
+
+
+	void OnTriggerStay(Collider other)
+	{
+		Debug.Log("Enter trigger");
+
+		if (other.tag == "platformTrigger")
+		{
+			Debug.Log("Entered correct trigger");
+			transform.parent = other.transform.parent;
+		}
+	}
+
+	/*void OnTriggerExit(Collider collider)
+	{
+		Debug.Log("Exit trigger");
+
+		if (collider.gameObject.tag == "platformTrigger")
+		{
+			transform.parent = null;
+		}
+	}*/
 
 
 
