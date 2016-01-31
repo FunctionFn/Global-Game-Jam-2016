@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Audio;
 
 public class Player : MonoBehaviour {
 
@@ -45,6 +46,14 @@ public class Player : MonoBehaviour {
 	public float lightRechargePerSecond;
 
 	private PlayerPubMethods playerPublicMethods;
+
+	public AudioSource blastSound;
+	public AudioSource chargeUp;
+	public AudioSource chargeBlast;
+	public AudioMixer chargeMixer;
+	public AudioMixerSnapshot chargeOn;
+	public AudioMixerSnapshot chargeOff;
+	bool playCharge = true;
 
     // Use this for initialization
     void Start()
@@ -199,13 +208,24 @@ public class Player : MonoBehaviour {
         {
             GameObject go = (GameObject)Instantiate(lightballPrefab, lightballSpawnLocation.position, mainCamera.transform.rotation);
             go.GetComponent<Rigidbody>().velocity = (mainCamera.transform.forward + mainCamera.transform.up * lightballUpOffset) * lightballSpeed;
+			if(!chargeBlast.isPlaying)
+				chargeBlast.Play();
 			SpendLight(lbCost);
         }
+		chargeOff.TransitionTo(1f);
+		playCharge = true;
         currentCharge = 0;
     }
 
     void LightballCharge()
     {
+		if(!chargeUp.isPlaying && playCharge)
+		{
+			chargeUp.Play ();
+			playCharge = false;
+			chargeOn.TransitionTo(1f);
+		}
+
 		if (playerPublicMethods.GetCurrentLight() >= lbCost)
 		{
 			currentCharge += lbChargePerSecond * Time.deltaTime;
@@ -213,6 +233,7 @@ public class Player : MonoBehaviour {
 			if (currentCharge > lbMaxCharge)
 			{
 				currentCharge = lbMaxCharge;
+
 			}
 		}
     }
@@ -224,7 +245,11 @@ public class Player : MonoBehaviour {
 			GameObject go = (GameObject)Instantiate(lightblastPrefab, lightblastSpawnLocation.position, transform.rotation);
 			SpendLight(blastCost);
 
+			if(!blastSound.isPlaying)
+				blastSound.Play();
+
 			canvasFlash.GetComponent<LightFlash>().Flash();
+
 		}
 		
 	}
