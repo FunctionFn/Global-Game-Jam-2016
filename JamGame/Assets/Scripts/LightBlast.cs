@@ -17,7 +17,7 @@ public class LightBlast : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.localScale += new Vector3(expansionSpeed * Time.deltaTime, expansionSpeed * Time.deltaTime, expansionSpeed * Time.deltaTime);
-
+		//GetComponent<SphereCollider>().radius += expansionSpeed * Time.deltaTime;
         life -= Time.deltaTime;
 
         if (life <= 0)
