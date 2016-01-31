@@ -53,12 +53,8 @@ public class Player : MonoBehaviour {
         Physics.IgnoreLayerCollision(8, gameObject.layer);
 
 		playerSounds = GetComponent<PlayerSounds>();
-<<<<<<< HEAD
-=======
-
-
 		playerPublicMethods = GetComponent<PlayerPubMethods>();
->>>>>>> origin/dan_is_even_awesomer
+
     }
 
     // Update is called once per frame
