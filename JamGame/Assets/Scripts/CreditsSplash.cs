@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class DeathSplash : MonoBehaviour
+public class CreditsSplash : MonoBehaviour
 {
 
 	// Use this for initialization
@@ -16,7 +16,7 @@ public class DeathSplash : MonoBehaviour
 	{
 		if (Input.anyKeyDown)
 		{
-			SceneManager.LoadScene("CreditsScreen");
+			SceneManager.LoadScene("TitleScreen");
 		}
 	}
 }
