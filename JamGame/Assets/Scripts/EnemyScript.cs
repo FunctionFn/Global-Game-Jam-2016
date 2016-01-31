@@ -29,4 +29,17 @@ public class EnemyScript : MonoBehaviour
 		//Play animation
 		player.GetComponent<PlayerPubMethods>().Invoke("BasicAttack", 0.0f);
 	}
+
+	void OnTriggerStay(Collider other)
+	{
+		if(other.GetComponent<LightBall>())
+		{
+			Destroy(other.gameObject);
+			Destroy(gameObject);
+		}
+		else if(other.GetComponent<LightBlast>())
+		{
+			Destroy(gameObject);
+		}
+	}
 }

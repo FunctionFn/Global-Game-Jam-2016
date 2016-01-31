@@ -8,6 +8,8 @@ public class Player : MonoBehaviour {
     public GameObject lightblastPrefab;
     public GameObject mainCamera;
 
+	public GameObject canvasFlash;
+
     public Transform lightballSpawnLocation;
     public Transform lightblastSpawnLocation;
     public Transform cameraAxisLocation;
@@ -179,7 +181,7 @@ public class Player : MonoBehaviour {
 
     void LightballCharge()
     {
-		if (playerPublicMethods.GetCurrentLight() > lbCost)
+		if (playerPublicMethods.GetCurrentLight() >= lbCost)
 		{
 			currentCharge += lbChargePerSecond * Time.deltaTime;
 
@@ -192,10 +194,12 @@ public class Player : MonoBehaviour {
 
 	void LightBlast()
 	{
-		if (playerPublicMethods.GetCurrentLight() > blastCost)
+		if (playerPublicMethods.GetCurrentLight() >= blastCost)
 		{
 			GameObject go = (GameObject)Instantiate(lightblastPrefab, lightblastSpawnLocation.position, transform.rotation);
 			SpendLight(blastCost);
+
+			canvasFlash.GetComponent<LightFlash>().Flash();
 		}
 		
 	}
