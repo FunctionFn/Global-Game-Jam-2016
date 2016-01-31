@@ -234,6 +234,11 @@ public class Player : MonoBehaviour {
 		playerPublicMethods.AddLight(lightRechargePerSecond * Time.deltaTime);
 	}
 
+	void DrainLight()
+	{
+		playerPublicMethods.RemoveLight(lightRechargePerSecond * Time.deltaTime);
+	}
+
 	void SpendLight(float light)
 	{
 		playerPublicMethods.RemoveLight(light);
@@ -247,6 +252,14 @@ public class Player : MonoBehaviour {
 			{
 				ChargeLight();
 				other.GetComponent<Sunbeam>().drainLight(lightRechargePerSecond * Time.deltaTime);
+			}
+		}
+
+		if(other.GetComponent<Chalice>())
+		{
+			if (playerPublicMethods.GetCurrentLight() > 0 && other.GetComponent<Chalice>().AddLight(lightRechargePerSecond * Time.deltaTime))
+			{
+				DrainLight();
 			}
 		}
 	}
