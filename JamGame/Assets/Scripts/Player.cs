@@ -36,6 +36,9 @@ public class Player : MonoBehaviour {
     public float lbMaxCharge;
     public float currentCharge;
 
+	PlayerSounds playerSounds;
+	bool hasJustLanded = false;
+
 
     // Use this for initialization
     void Start()
@@ -46,10 +49,27 @@ public class Player : MonoBehaviour {
 
         Physics.IgnoreLayerCollision(8, gameObject.layer);
 
+		playerSounds = GetComponent<PlayerSounds>();
+
     }
 
     // Update is called once per frame
     void Update () {
+
+
+		if(controller.isGrounded)
+		{
+			if(!hasJustLanded)
+			{
+				hasJustLanded = true;
+				playerSounds.PlayLand();
+			}
+		}
+		else
+		{
+			hasJustLanded = false;
+		}
+
         ControlUpdate();
 
         if (Input.GetButton("Fire"))
@@ -66,6 +86,7 @@ public class Player : MonoBehaviour {
         {
             LightBlast();
         }
+
     }
 
     void ControlUpdate()
@@ -94,7 +115,10 @@ public class Player : MonoBehaviour {
         {
 
             if (Input.GetButtonDown("Jump"))
+			{
                 moveDirection.y = jumpSpeed;
+				playerSounds.PlayJump();
+			}
 
         }
 
