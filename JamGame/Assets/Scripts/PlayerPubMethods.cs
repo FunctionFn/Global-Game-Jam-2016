@@ -23,13 +23,18 @@ public class PlayerPubMethods : MonoBehaviour
 
 	public void BasicAttack()
 	{
-		GetHit(10);
+		GetHit(40);
 	}
 
 	void GetHit(int damage)
 	{
 		healthRemaining -= damage;
 		Debug.Log("Health remaining: " + healthRemaining);
+	}
+
+	public int GetCurrentHealth()
+	{
+		return healthRemaining;
 	}
 
 	public void AddLight(float light)
