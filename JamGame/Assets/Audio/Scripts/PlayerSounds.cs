@@ -98,7 +98,6 @@ public class PlayerSounds : MonoBehaviour {
 			footstepSound.PlayOneShot (footstepSound.clip);
 
 			yield return new WaitForSeconds(walkInterval);
-			Debug.Log ("PLAYED");
 			playsteps = false;
 	}
 
